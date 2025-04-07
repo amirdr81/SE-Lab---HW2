@@ -2,16 +2,15 @@ import java.util.Date;
 import java.util.Map;
 
 public abstract class BaseGateway implements PaymentGateway {
-    protected Map<String, String> config;
+    protected ConfigurationManager configManager;
     protected String gatewayName;
 
-    public BaseGateway(String gatewayName, Map<String, String> config) {
+    public BaseGateway(String gatewayName, ConfigurationManager configManager) {
         this.gatewayName = gatewayName;
-        this.config = config;
+        this.configManager = configManager;
     }
 
     protected void log(String message) {
         System.out.println("[" + new Date() + "] [" + gatewayName + "] " + message);
     }
-
 }

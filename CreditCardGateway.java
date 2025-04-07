@@ -2,15 +2,15 @@ import java.util.Date;
 import java.util.Map;
 
 public class CreditCardGateway extends BaseGateway {
-
-    public CreditCardGateway(Map<String, String> config) {
-        super("CreditCardGateway", config);
+    public CreditCardGateway(ConfigurationManager configManager) {
+        super("CreditCardGateway", configManager);
     }
 
     @Override
     public Map<String, String> processPayment(double amount, String currency,
             Map<String, String> customerInfo, Map<String, String> paymentDetails) {
-        log("اتصال به API کارت اعتباری در " + config.get("credit_card_endpoint"));
+        String endpoint = configManager.getProperty("credit_card_endpoint");
+        log("اتصال به API کارت اعتباری در " + endpoint);
         String transactionId = "CC" + new Date().getTime();
         log("پردازش پرداخت کارت اعتباری برای " + customerInfo.get("name"));
         return Map.of("status", "success", "transaction_id", transactionId);

@@ -3,28 +3,29 @@ import java.util.Map;
 
 public class DigitalWalletGateway extends BaseGateway {
 
-    public DigitalWalletGateway(Map<String, String> config) {
-        super("DigitalWalletGateway", config);
+    public DigitalWalletGateway(ConfigurationManager configManager) {
+        super("DigitalWalletGateway", configManager);
     }
 
     @Override
     public Map<String, String> processPayment(double amount, String currency,
             Map<String, String> customerInfo, Map<String, String> paymentDetails) {
-        log("اتصال به API کیف پول دیجیتال در " + config.get("digital_wallet_endpoint"));
+        String endpoint = configManager.getProperty("digital_wallet_endpoint");
+        log("Connecting to Digital Wallet API at " + endpoint);
         String transactionId = "DW" + new Date().getTime();
-        log("پردازش پرداخت کیف پول دیجیتال برای " + customerInfo.get("name"));
+        log("Processing digital wallet payment for " + customerInfo.get("name"));
         return Map.of("status", "success", "transaction_id", transactionId);
     }
 
     @Override
     public Map<String, String> refundPayment(String transactionId) {
-        log("بازپرداخت تراکنش کیف پول دیجیتال: " + transactionId);
+        log("Refunding digital wallet transaction: " + transactionId);
         return Map.of("status", "refunded", "transaction_id", transactionId);
     }
 
     @Override
     public String getTransactionStatus(String transactionId) {
-        log("دریافت وضعیت تراکنش کیف پول دیجیتال: " + transactionId);
-        return "PENDING";
+        log("Getting digital wallet transaction status for: " + transactionId);
+        return "PENDING"; // Example status
     }
 }

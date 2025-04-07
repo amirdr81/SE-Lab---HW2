@@ -3,28 +3,30 @@ import java.util.Map;
 
 public class BankTransferGateway extends BaseGateway {
 
-    public BankTransferGateway(Map<String, String> config) {
-        super("BankTransferGateway", config);
+    public BankTransferGateway(ConfigurationManager configManager) {
+        super("BankTransferGateway", configManager);
     }
 
     @Override
     public Map<String, String> processPayment(double amount, String currency,
             Map<String, String> customerInfo, Map<String, String> paymentDetails) {
-        log("اتصال به API انتقال بانکی در " + config.get("bank_transfer_endpoint"));
+
+        String endpoint = configManager.getProperty("bank_transfer_endpoint");
+        log("Connecting to Bank Transfer API at " + endpoint);
         String transactionId = "BT" + new Date().getTime();
-        log("پردازش انتقال بانکی برای " + customerInfo.get("name"));
+        log("Processing bank transfer payment for " + customerInfo.get("name"));
         return Map.of("status", "success", "transaction_id", transactionId);
     }
 
     @Override
     public Map<String, String> refundPayment(String transactionId) {
-        log("بازپرداخت تراکنش انتقال بانکی: " + transactionId);
+        log("Refunding bank transfer transaction: " + transactionId);
         return Map.of("status", "refunded", "transaction_id", transactionId);
     }
 
     @Override
     public String getTransactionStatus(String transactionId) {
-        log("دریافت وضعیت تراکنش انتقال بانکی: " + transactionId);
-        return "SUCCESS";
+        log("Getting bank transfer transaction status for: " + transactionId);
+        return "SUCCESS"; // Example status
     }
 }
