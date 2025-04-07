@@ -1,0 +1,52 @@
+@startuml
+
+interface PaymentGateway {
+    +processPayment(amount: double, currency: String, customerInfo: Map, paymentDetails: Map): Map
+    +refundPayment(transactionId: String): Map
+    +getTransactionStatus(transactionId: String): String
+}
+
+abstract class BaseGateway {
+    -config: Map
+    -gatewayName: String
+    +BaseGateway(gatewayName: String, config: Map)
+    #log(message: String): void
+}
+
+class CreditCardGateway {
+    +CreditCardGateway(config: Map)
+    +processPayment(amount: double, currency: String, customerInfo: Map, paymentDetails: Map): Map
+    +refundPayment(transactionId: String): Map
+    +getTransactionStatus(transactionId: String): String
+}
+
+class DigitalWalletGateway {
+    +DigitalWalletGateway(config: Map)
+    +processPayment(amount: double, currency: String, customerInfo: Map, paymentDetails: Map): Map
+    +refundPayment(transactionId: String): Map
+    +getTransactionStatus(transactionId: String): String
+}
+
+class BankTransferGateway {
+    +BankTransferGateway(config: Map)
+    +processPayment(amount: double, currency: String, customerInfo: Map, paymentDetails: Map): Map
+    +refundPayment(transactionId: String): Map
+    +getTransactionStatus(transactionId: String): String
+}
+
+class PaymentProcessor {
+    -gateway: PaymentGateway
+    +PaymentProcessor(gateway: PaymentGateway)
+    +executePayment(amount: double, currency: String, customerInfo: Map, paymentDetails: Map): Map
+}
+
+
+' Relationships
+PaymentGateway <|.. BaseGateway
+BaseGateway <|-- CreditCardGateway
+BaseGateway <|-- DigitalWalletGateway
+BaseGateway <|-- BankTransferGateway
+
+PaymentProcessor --> PaymentGateway : uses
+
+@enduml
