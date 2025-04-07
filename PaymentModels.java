@@ -81,3 +81,23 @@ public class DigitalWalletPayment extends Payment {
     }
 }
 
+public class BankTransferPayment extends Payment {
+    private String bankAccountNumber;
+
+    public BankTransferPayment(double amount, String currency, String bankAccountNumber) {
+        super(amount, currency);
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    @Override
+    public boolean validatePayment() {
+        // منطق اعتبارسنجی انتقال بانکی
+        return bankAccountNumber.matches("\\d{10,18}");
+    }
+
+    @Override
+    public void printDetails() {
+        super.printDetails();
+        System.out.println("Bank Account Number: " + bankAccountNumber);
+    }
+}
