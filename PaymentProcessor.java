@@ -1,5 +1,7 @@
 import java.util.Date;
 import java.util.Map;
+import .Payment;
+import .CreditCardPayment;
 
 public class PaymentProcessor {
     private Map<String, String> config;
@@ -108,6 +110,7 @@ public class PaymentProcessor {
         Map<String, String> customer = Map.of("name", "John Doe", "email", "john@example.com");
         Map<String, String> paymentDetails = Map.of("card_number", "123456789012", "expiry", "12/25", "cvv", "123");
 
+        CreditCardPayment creditCardPayment = new CreditCardPayment()
         Map<String, String> result = processor.processPayment("credit_card", 100, "USD", customer, paymentDetails);
         System.out.println("Final Result: " + result);
     }
