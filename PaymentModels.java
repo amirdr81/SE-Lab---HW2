@@ -35,3 +35,28 @@ public abstract class Payment {
         System.out.println("Timestamp: " + timestamp);
     }
 }
+
+public class CreditCardPayment extends Payment {
+    private String cardNumber;
+    private String expiryDate;
+
+    public CreditCardPayment(double amount, String currency, String cardNumber, String expiryDate) {
+        super(amount, currency);
+        this.cardNumber = cardNumber;
+        this.expiryDate = expiryDate;
+    }
+
+    @Override
+    public boolean validatePayment() {
+        // منطق اعتبارسنجی کارت اعتباری
+        return cardNumber.matches("\\d{16}") && expiryDate.matches("\\d{2}/\\d{2}");
+    }
+
+    @Override
+    public void printDetails() {
+        super.printDetails();
+        System.out.println("Card Number: " + cardNumber);
+        System.out.println("Expiry Date: " + expiryDate);
+    }
+}
+
