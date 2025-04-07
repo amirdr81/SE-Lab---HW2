@@ -6,7 +6,7 @@ public class Main {
         PaymentGateway creditGateway = new CreditCardGateway(configManager);
         PaymentProcessor processor = new PaymentProcessor(creditGateway);
 
-        Map<String, String> customer = Map.of("name", "John Doe", "email", "john@example.com");
+        Map<String, String> customer = Map.of("name", "Kian Izadpanah", "email", "kianizadpanah@gmail.com");
         Map<String, String> creditPaymentDetails = Map.of(
                 "card_number", "123456789012",
                 "expiry", "12/25",
