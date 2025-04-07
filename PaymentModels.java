@@ -60,3 +60,24 @@ public class CreditCardPayment extends Payment {
     }
 }
 
+public class DigitalWalletPayment extends Payment {
+    private String walletId;
+
+    public DigitalWalletPayment(double amount, String currency, String walletId) {
+        super(amount, currency);
+        this.walletId = walletId;
+    }
+
+    @Override
+    public boolean validatePayment() {
+        // منطق اعتبارسنجی کیف پول دیجیتال
+        return walletId != null && !walletId.isEmpty();
+    }
+
+    @Override
+    public void printDetails() {
+        super.printDetails();
+        System.out.println("Wallet ID: " + walletId);
+    }
+}
+
